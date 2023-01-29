@@ -2,12 +2,11 @@
 from urllib.parse import urlparse, urlsplit
 
 class VismaIdentity:
-    """ Identifies path and parameters from uri request
+    """ Identifies path and parameters from uri request. Returns uri path and parameters
     """
     def __init__(self, uri: str) -> None:
-        
         uriparsed = urlsplit(uri)
-        scheme: str = uriparsed.scheme
+        self._scheme: str = uriparsed.scheme
         self.path: str = uriparsed.netloc # urlsplit views the path as netloc
         
         parameters: list = uriparsed.query.split("&")
