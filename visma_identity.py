@@ -12,15 +12,22 @@ class VismaIdentity:
         
         parameters: list = uriparsed.query.split("&")
         self.parameters: dict = {}
-        for parameter: str in parameters:
-            parameter.split("=")
-            self.parameters[parameter[0]] = parameter[1]
+        for parameter in parameters:
+            valuepair = parameter.split("=")
+            if valuepair[0] == "paymentnumber":
+                self.parameters[valuepair[0]]: int = int(valuepair[1])
+            else:
+                self.parameters[valuepair[0]]: str = valuepair[1]
 
-    def __dict__(self) -> dict:
-        """ Whole object can be iterated like a dict
+    def __getitem__(self, item) -> dict:
+        """ Whole object can be treated like a dict
         """
-        identity_dict = self.parameters
+        identity_dict: dict = self.parameters
         self.parameters["path"]: str = self.path
-        return identity_dict
+        return identity_dict[item]
 
-v = VismaIdentity("visma-identity://confirm?source=netvisor&paymentnumber=102226")
+    def __iter__(self):
+        """ Object can also be iterated
+        """
+        yield self.path
+        yield self.parameters
