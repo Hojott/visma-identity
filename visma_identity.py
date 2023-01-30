@@ -5,6 +5,11 @@ class VismaIdentityURIParser:
     """ Identifies path and parameters from uri request. Returns uri path and parameters
     """
     def __init__(self, uri: str) -> None:
+        self.parse_uri(uri)
+
+    def parse_uri(self, uri: str) -> None:
+        """ Parses URI inserted
+        """
         uriparsed = urlsplit(uri)
         self._scheme: str = uriparsed.scheme
         self.path: str = uriparsed.netloc # urlsplit views the path as netloc
@@ -17,6 +22,9 @@ class VismaIdentityURIParser:
                 self.parameters[valuepair[0]]: int = int(valuepair[1])
             else:
                 self.parameters[valuepair[0]]: str = valuepair[1]
+
+    def get_scheme(self) -> str:
+        return self._scheme
 
     def __getitem__(self, item) -> dict:
         """ Whole object can be treated like a dict
