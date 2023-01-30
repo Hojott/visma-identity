@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from urllib.parse import urlparse, urlsplit
 
-class VismaIdentity:
+class VismaIdentityURIParser:
     """ Identifies path and parameters from uri request. Returns uri path and parameters
     """
     def __init__(self, uri: str) -> None:
@@ -25,7 +25,7 @@ class VismaIdentity:
         self.parameters["path"]: str = self.path
         return identity_dict[item]
 
-    def __iter__(self):
+    def __iter__(self) -> tuple:
         """ Object can also be iterated
         """
         yield self.path
